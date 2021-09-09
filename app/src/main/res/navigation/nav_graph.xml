@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/des_splash_screen"
     android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/des_splash_screen"
+        android:name="com.utab.onlineshopkotlin.view.fragment.SplashScreenFragment"
+        android:label="Splash screen"
+        tools:layout="@layout/fragment_splash_screen"
+        />
 
 </navigation>
