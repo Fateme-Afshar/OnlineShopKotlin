@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.utab.onlineshopkotlin.R
 
-class BaseFragment : Fragment() {
+open class BaseFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
