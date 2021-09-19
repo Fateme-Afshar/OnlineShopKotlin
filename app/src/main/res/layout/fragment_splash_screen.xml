@@ -104,7 +104,7 @@
             android:layoutDirection="rtl"
             android:text="@string/try_again"
             android:visibility="gone"
-            android:onClick="@{()->fragment.checkInternetSetup()}"
+            android:onClick="@{()->fragment.hasInternet()}"
             app:icon="@drawable/ic_refresh"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,5 @@
 package com.utab.onlineshopkotlin.view.fragment
 
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,31 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.utab.onlineshopkotlin.R
 import com.utab.onlineshopkotlin.databinding.FragmentSplashScreenBinding
-import com.utab.onlineshopkotlin.utils.NetworkUtils
+import com.utab.onlineshopkotlin.utils.State
+import com.utab.onlineshopkotlin.viewModel.SplashScreenVm
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashScreenFragment : BaseFragment() {
     private lateinit var binding: FragmentSplashScreenBinding
 
     @Inject
-    lateinit var splashVm: SplashScreenFragment
+    lateinit var splashVm: SplashScreenVm
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        splashVm.receiveCategories(this)
+
+        splashVm.stateEvent().observe(this) { state ->
+            if (hasInternet())
+                if (state == State.ERROR) {
+                    showSnackBar(binding.root, "خطایی در دریافت اطلاعات به وجود آمده است")
+                }
+            else
+                checkInternetSetup()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,17 +41,17 @@ class SplashScreenFragment : BaseFragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_splash_screen, container, false)
         binding.fragment = this
+
         checkInternetSetup()
+
         return binding.root
     }
 
-    fun checkInternetSetup() {
-        activity?.let { activity ->
-            if (NetworkUtils.checkNetworkConnectivity(activity.getSystemService(ConnectivityManager::class.java)))
-                setupVisibility(View.VISIBLE, View.GONE)
-            else
-                setupVisibility(View.GONE, View.VISIBLE)
-        }
+    private fun checkInternetSetup() {
+        if (hasInternet())
+            setupVisibility(View.VISIBLE, View.GONE)
+        else
+            setupVisibility(View.GONE, View.VISIBLE)
     }
 
     private fun setupVisibility(hasInternetVisibility: Int, noInternetVisibility: Int) {

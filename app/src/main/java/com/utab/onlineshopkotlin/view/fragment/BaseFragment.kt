@@ -1,19 +1,23 @@
 package com.utab.onlineshopkotlin.view.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.net.ConnectivityManager
 import android.view.View
-import android.view.ViewGroup
-import com.utab.onlineshopkotlin.R
+import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import com.utab.onlineshopkotlin.utils.NetworkUtils
 
 open class BaseFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_base, container, false)
+    fun showSnackBar(view: View,msg:String) {
+        Snackbar.make(view,msg,Snackbar.LENGTH_SHORT).show()
     }
+
+    fun hasInternet(): Boolean {
+        return NetworkUtils.checkNetworkConnectivity(
+            requireActivity().getSystemService(
+                ConnectivityManager::class.java
+            )
+        )
+    }
+
 }

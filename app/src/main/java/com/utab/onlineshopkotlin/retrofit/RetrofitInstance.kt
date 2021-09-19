@@ -3,16 +3,18 @@ package com.utab.onlineshopkotlin.retrofit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.utab.onlineshopkotlin.utils.NetworkUtils
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class RetrofitInstance {
+class RetrofitInstance @Inject constructor(){
     private val retrofit: Retrofit by lazy {
         initRetrofit()
     }
