@@ -22,14 +22,18 @@ class SplashScreenFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashVm.receiveCategories(this)
+        splashVm.receiveBestProducts(this)
+        splashVm.receiveNewestProduct(this)
+        splashVm.receivePopulatedProduct(this)
+        splashVm.receiveSpecialProduct(this)
 
         splashVm.stateEvent().observe(this) { state ->
-            if (hasInternet())
-                if (state == State.ERROR) {
-                    showSnackBar(binding.root, "خطایی در دریافت اطلاعات به وجود آمده است")
-                }
-            else
+            if (state == State.ERROR) {
+                showSnackBar(binding.root, "خطایی در دریافت اطلاعات به وجود آمده است")
+                splashVm.hasInternet=false
                 checkInternetSetup()
+                splashVm.stateEvent().removeObservers(this)
+            }
         }
     }
 
@@ -47,10 +51,10 @@ class SplashScreenFragment : BaseFragment() {
         return binding.root
     }
 
-    private fun checkInternetSetup() {
-        if (hasInternet())
+    fun checkInternetSetup() {
+        if (hasInternet()) {
             setupVisibility(View.VISIBLE, View.GONE)
-        else
+        } else
             setupVisibility(View.GONE, View.VISIBLE)
     }
 

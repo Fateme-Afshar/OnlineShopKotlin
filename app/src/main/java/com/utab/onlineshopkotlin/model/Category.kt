@@ -9,6 +9,3 @@ data class Category(
     @Json(name = "name") var name: String = "",
     @Json(name = "image") var image: Image = Image("")
 )
-
-@JsonClass(generateAdapter = true)
-data class Image(@Json(name = "src") var imageUrl: String = "")

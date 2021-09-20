@@ -6,7 +6,9 @@ import com.utab.onlineshopkotlin.utils.NetworkUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CategoryRepository @Inject constructor(private val retrofitInstance: RetrofitInstance) :
     BaseRepository(retrofitInstance) {
 
